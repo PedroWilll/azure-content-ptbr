@@ -74,7 +74,35 @@ Como já mencionado, todas as contas do Banco de Dados de Documentos exigem aute
             };
             MongoClient client = new MongoClient(settings);
             var database = client.GetDatabase("Tasks",);
-	
+            
+            
+## Conectando-se com o driver de JAVA para MongoDB
+Assim como na conexão C# em java também exige que autenticação e comunicação ocorram via SSL. Abaixo temos um padrão de uma ConnectionFactory em JAVA.
+
+public class ConnectionFactory {
+    
+     public static MongoClient getConnection () 
+     {
+         String databaseURL = "HostName.documents.azure.com:10250";
+         String user = "YourUser";
+         String password = "YourPass";
+         MongoClient mongo = null;
+         
+     try{
+     
+         String dbURI = "mongodb://"+user+":"+password+"@"+databaseURL+"/test?ssl=true";
+         mongo = new MongoClient(new MongoClientURI(dbURI));        
+         return mongo;
+    
+     }
+     
+     catch(MongoCommandException e){
+         
+         System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+         return null;
+     }
+}
+}
 
 ## Próximas etapas
 
